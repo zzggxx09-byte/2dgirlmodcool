@@ -1,0 +1,11 @@
+{
+  "doommob.ambient1": {
+    "sounds": [ { "name": "doommod:doommob/ambient1", "stream": false } ]
+  },
+  "doommob.ambient2": {
+    "sounds": [ { "name": "doommod:doommob/ambient2", "stream": false } ]
+  },
+  "doommob.hurt": {
+    "sounds": [ { "name": "doommod:doommob/hurt", "stream": false } ]
+  }
+}

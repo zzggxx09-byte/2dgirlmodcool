@@ -40,7 +40,8 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
 
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 
-        bindTexture(getEntityTexture(entity));
+        GlStateManager.disableTexture2D();
+GlStateManager.color(1.0F, 0.0F, 0.0F, 1.0F); // яскраво-червоний
 
         float halfWidth = 0.4F;
         float height = 1.8F;
@@ -53,6 +54,8 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
         buffer.pos(halfWidth, 0.0D, 0.0D).tex(1.0D, 1.0D).endVertex();
         buffer.pos(halfWidth, height, 0.0D).tex(1.0D, 0.0D).endVertex();
         Tessellator.getInstance().draw();
+        GlStateManager.enableTexture2D();
+GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.enableCull();
 
         GlStateManager.disableBlend();

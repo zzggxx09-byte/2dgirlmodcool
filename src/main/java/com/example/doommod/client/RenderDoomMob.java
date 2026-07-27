@@ -17,7 +17,6 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class RenderDoomMob extends Render<EntityDoomMob> {
 
-    // Порядок важливий тільки для назв файлів — сам поворот рахується нижче.
     private static final String[] DIRECTIONS = {"front", "right", "back", "left"};
 
     public RenderDoomMob(RenderManager manager) {
@@ -36,13 +35,12 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
-        // Billboard: повертаємо квад лицем до камери по горизонталі
         GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 
         bindTexture(getEntityTexture(entity));
 
-        float halfWidth = 0.4F; // ширина квада в блоках, підбери під розмір
-        float height = 1.8F;    // висота квада в блоках (64x128 -> співвідношення 1:2)
+        float halfWidth = 0.4F;
+        float height = 1.8F;
 
         GlStateManager.disableCull();
         BufferBuilder buffer = Tessellator.getInstance().getBuffer();
@@ -63,21 +61,10 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
 
     @Override
     protected ResourceLocation getEntityTexture(EntityDoomMob entity) {
-        int dirIndex = getDirectionIndex(entity);
-        String dirName = DIRECTIONS[dirIndex];
-        String stateName = entity.getAnimState().name().toLowerCase(); // idle / walk / run
-        int frame = entity.getCurrentFrame();
-
-        String path = "textures/entity/doommob/" + stateName + "/" + dirName + "_" + frame + ".png";
-        return new ResourceLocation(DoomMod.MODID, path);
+        // ТИМЧАСОВО для тесту — завжди показує один конкретний файл
+        return new ResourceLocation(DoomMod.MODID, "textures/entity/doommob/run/back_0.png");
     }
 
-    /**
-     * Рахує з якого боку гравець дивиться на моба (0=front,1=right,2=back,3=left),
-     * враховуючи куди сам моб дивиться (rotationYaw).
-     * Якщо після тесту напрямки виявляться переплутані (наприклад бачиш "спину",
-     * коли дивишся моба в обличчя) — поміняй знак/порядок нижче.
-     */
     private int getDirectionIndex(EntityDoomMob entity) {
         double dx = this.renderManager.renderViewEntity.posX - entity.posX;
         double dz = this.renderManager.renderViewEntity.posZ - entity.posZ;
@@ -85,9 +72,9 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
         double relative = MathHelper.wrapDegrees(entity.rotationYaw - angleToCamera);
         relative = (relative + 360.0D) % 360.0D;
 
-        if (relative >= 45 && relative < 135) return 3;   // left
-        if (relative >= 135 && relative < 225) return 2;  // back
-        if (relative >= 225 && relative < 315) return 1;  // right
-        return 0; // front
+        if (relative >= 45 && relative < 135) return 3;
+        if (relative >= 135 && relative < 225) return 2;
+        if (relative >= 225 && relative < 315) return 1;
+        return 0;
     }
 }

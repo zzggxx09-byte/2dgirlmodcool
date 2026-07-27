@@ -10,9 +10,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up JDK 8
@@ -24,21 +23,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Cache Gradle & Forge/MCP
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-            build/tmp
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/build.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Setup decompiled workspace
-        run: ./gradlew setupDecompWorkspace --stacktrace
-
-      - name: Build mod
+      - name: Build with Gradle
         run: ./gradlew build --stacktrace
 
       - name: Upload built jar

@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.FMLLog;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
@@ -26,6 +27,8 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
 
     @Override
     public void doRender(EntityDoomMob entity, double x, double y, double z, float entityYaw, float partialTicks) {
+        FMLLog.log.info("!!! DOOMMOD: doRender called !!!");
+
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
 
@@ -61,7 +64,6 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
 
     @Override
     protected ResourceLocation getEntityTexture(EntityDoomMob entity) {
-        // ТИМЧАСОВО для тесту — завжди показує один конкретний файл
         return new ResourceLocation(DoomMod.MODID, "textures/entity/doommob/run/back_0.png");
     }
 

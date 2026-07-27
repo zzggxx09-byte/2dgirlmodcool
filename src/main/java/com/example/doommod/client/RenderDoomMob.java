@@ -27,7 +27,7 @@ public class RenderDoomMob extends Render<EntityDoomMob> {
 
     @Override
     public void doRender(EntityDoomMob entity, double x, double y, double z, float entityYaw, float partialTicks) {
-        FMLLog.log.info("!!! DOOMMOD: doRender called !!!");
+        System.out.println("!!! DOOMMOD: doRender called !!!");
 
         GlStateManager.pushMatrix();
         GlStateManager.translate(x, y, z);
